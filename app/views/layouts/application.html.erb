@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bookers2</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <!-- Bootstrapのリンク -->
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+    <%= yield %>
+
+   <footer class="footer style-2">
+      <div class="container"><!-- ::before -->
+        <div class="row"><!-- ::before -->
+          <div class="col-xs-3 col-xs-offset-9">
+            <div class="col">
+              <br>
+              <p class="no-margin" style="font-size: 11px;"><!-- 左上寄せ -->
+              <br>
+              CopyRight Infratop.inc
+              </p>
+            </div><!-- ::after -->
+          </div><!-- ::after -->
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

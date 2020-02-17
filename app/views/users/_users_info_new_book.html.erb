@@ -1,0 +1,41 @@
+<!-- Bootstrap記述法 -->
+<!-- まず全体をcontainer classで囲む div class="container" -->
+<!-- 次にrow classで囲む div class="row" -->
+<!-- 最後にcol classで囲む div class="col-画面幅-グリッド数" -->
+<!-- これの繰り返し -->
+<div class="container"><!-- pタグどうする？ -->
+	<div class="row">
+		<div class="col-xs-3"><!-- どの辺で3つに分かれてる？ -->
+			<h2>User info</h2>
+			<!-- %= attachment_image_tag 保存先インスタンス名, :保存先カラム名, :サイズ（横幅,高さ）, 画像拡張子, 代替画像 % -->
+			<%= attachment_image_tag book.user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg", alt: "Profile image" %>
+			<table class="table">
+				<tbody>
+					<tr>
+						<th>name</th>
+						<th><%= user.name %></th><!-- user name -->
+					</tr>
+						<th>introduction</th>
+						<th><%= user.introduction %></th><!-- user introduction -->
+				</tbody>
+				<div class="row">
+					<%= link_to "col-xs-12 btn btn-default glyphicon glyphicon-wrench", edit_user_path(user) %>
+				</div>
+				<h2>New book</h2>
+				<%= form_for(book) do |f| %> <!-- 最後にエンド -->
+					<div class="field row">
+						<h4>Title</h4>
+						<%= f.text_field :title %>
+					</div>
+					<div class="field row">
+						<h4>Opinion</h4>
+						<%= f.text_area :body %>
+					</div>
+					<div class="actons row btn btn-primary col-xs-12">
+						<p><%= f.submit 'Create Book' %></p> <!-- .erb submit=提示する -->
+					</div>
+				<% end %>
+			</table>
+		</div>
+	</div>
+</div>
