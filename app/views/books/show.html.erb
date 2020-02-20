@@ -1,0 +1,54 @@
+<!-- booksの詳細画面 -->
+<% @book.errors.full_messages.each do |message| %><!-- 複数のメッセージが格納されていることもあるので、全て表示するには each でループで回しましょう。 -->
+	<%= message %>
+<% end %>
+
+<div class="row">
+<%= render 'users/userinfo_newbook', users: @user %><!-- users=テンプレの中のusersは各アクションの@userから参照 -->
+	<div class="col-xs-9">
+		<div class="table table-hover table-inverse"><!-- hover=空中に停止する マウスオーバーで背景色の変更 inverse=逆の-->
+			<h2>Book detail</h2>
+			<!-- 自他ユーザーで表示を分岐 -->
+			<% if user_signed_in? && current_user == @user %><!-- a&&b=aとbが共に真の場合に真 id不要-->
+			<!--マイページ(編集や削除ができる)-->
+			<table class="table">
+				<tbody>
+					<tr>
+						<!-- セル１ -->
+						<td><%= link_to (@user) do %>
+							<%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg", size:'100x100' %><br>
+							<% end %>
+							<%= link_to @user.name, user_path(@user) %>
+						</td>
+						<!-- セル２ -->
+						<td><%= link_to @books.title, book_path(@books) %></td>
+						<!-- セル３ -->
+						<td><%= @books.body %></td>
+						<!-- セル４ -->
+						<td><%= link_to "Edit", edit_book_path(@books), class: "btn btn-success" %></td>
+						<!-- セル５ -->
+						<td><%= link_to "Destroy", book_path(@books), class: "btn btn-danger", method: :delete,  "data-confirm" => "本当に削除しますか？" %></td>
+					</tr>
+				</tbody>
+			</table>
+			<% else %><!-- a&&b=aとbが共に真の場合に真ではない場合 -->
+			 <!--他の人のページ(編集や削除はできない)-->
+			<!--投稿されたイベントをクリックしてそこから他の人のページに飛んだ場合-->
+			<table class="table">
+				<tbody>
+					<tr>
+						<!-- セル１ -->
+						<td><%= attachment_image_tag @books.user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg", size:'100x100' %><br>
+							<%= link_to @user.name, user_path(@user) %>
+						</td>
+						<!-- セル２ -->
+						<td><%= link_to @books.title, book_path(@books) %></td>
+						<!-- セル３ -->
+						<td><%= @books.body %></td>
+					</tr>
+				</tbody>
+			</table>
+			<% end %>
+		</div>
+	</div>
+</div>

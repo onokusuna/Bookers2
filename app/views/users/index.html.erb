@@ -1,1 +1,32 @@
-<h1>ユーザー一覧画面</h1>
+<!-- usersの一覧画面 -->
+<% @user.errors.full_messages.each do |message| %><!-- 複数のメッセージが格納されていることもあるので、全て表示するには each でループで回しましょう。 -->
+	<%= message %>
+<% end %>
+
+<div class="row">
+<%= render 'users/userinfo_newbook', users: @user %><!-- usersコントローラーの該当のアクションの@userから参照 -->
+	<div class="col-xs-9">
+		<h2>Users</h2>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>image</th>
+					<th>name</th>
+					<th colspan="3"></th><!-- colspan属性には、水平方向のセルの結合数（セルがまたがる列数）を指定 -->
+				</tr>
+			</thead>
+			<tbody>
+				<% @users.each do |user| %><!-- ctrlの@users=User.allより引用するので@は複数形 -->
+				<tr>
+					<!-- セル１ -->
+					<td><%= attachment_image_tag user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "no_image.jpg", size:'50x50' %></td>
+					<!-- セル２ -->
+					<td><%= user.name %></td>
+					<!-- セル３ -->
+					<td><%= link_to "Show", user_path(user) %><!-- ここの引数は@いらない eachの|book|が関係--></td>
+				</tr>
+				<% end %><!-- eachメソッドのエンド忘れない！ -->
+			</tbody>
+		</table>
+	</div>
+</div>

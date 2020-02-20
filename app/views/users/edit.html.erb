@@ -1,1 +1,38 @@
-<h1>カレントユーザー編集画面</h1>
+<!-- エラメッセージ表示 -->
+<% if flash[:notice] %><!-- flash[:notice]にメッセージが入っている場合のみ、それを出力する -->
+  <p><%= flash[:notice] %></p>
+<% end %>
+
+<% if @user.errors.any? %> <!-- * モデルにデータが存在する → true/* モデルにデータが存在しない → falseを返すメソッド -->
+　　　　　<%= pluralize(@user.errors.count,"error") %><!-- plural=複数の -->
+ <ul> 
+  <% @user.errors.full_messages.each do |msg| %> 
+     <li><%= msg %></li> 
+     <% end %> 
+  </ul> 
+  <% end %>
+
+<div class="row">
+	<div class="col-xs-3">
+		<h2>User info</h2>
+		<%= form_for(@user) do |f| %><!-- form_forでは、さきほどのインスタンス（editアクションの@user）を使います。 -->
+			<div class="form-group has-icon">
+				<label class="control-label sr-only" for="inputEmail">Name</label>
+				<!-- text_fieldで、nameカラムを変更できるようにしています。 -->
+				<!-- autofocus:ページがロードされた時に、ユーザーIDや検索ワードなどの入力フィールドに自動的にフォーカスさせる -->
+				<!-- placeholder:フォームにあらかじめ薄いテキストで「佐藤 太郎」のように記入 -->
+					<%= f.text_field :name, autofocus: true %>
+				<span class="fa fa-user form-control-icon" aria-hidden="true"></span><!-- aria-hidden="true"で何してるの？ -->
+			</div>
+            <div class="form-group has-icon">
+	            <label class="control-label sr-only" for="inputEmail">ProfileImage</label>
+	            	<!-- ファイルアップロードのフォーム -->
+	                <%= f.attachment_field :profile_image, placeholder: "プロフィール画像", class: "user-edit-form" %>
+            </div>
+            <div class="">
+            		<h4>introduction</h4><%= f.text_area :introduction %>
+            </div>
+					<%= f.submit "Update User", class:"btn btn-default" %>
+		<% end %>
+	</div>
+</div>
